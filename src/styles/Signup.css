@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@keyframes sparks {
+   0% {transform: translate(0px, 0px);}
+   10%{
+    transform: translate(-20px, -20px);
+   }
+
+   20%{
+    transform: translate(-40px, -40px);
+
+   }
+
+   50%{
+    transform: translate(-80px, -80px);
+   }
+
+   70%{
+    transform: translate(-160px, -160px);
+   }
+   
+   80%{
+    transform: translate(-320px, -320px);
+   }
+   90%{
+    transform: translate(-640px, -640px);
+   }
+
+   100%{
+    transform: translate(-150px, -150px);
+   }
+}
