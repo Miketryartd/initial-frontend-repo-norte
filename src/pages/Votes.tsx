@@ -29,7 +29,7 @@ const Votes = ({
 
       // send request to backend with JWT
       const res = await axios.post(
-        `http://localhost:5000/post/${postId}/upvote`,
+        `https://initial-note-backend-repoo.onrender.com/post/${postId}/upvote`,
         {}, // no body
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -52,7 +52,7 @@ const Votes = ({
       if (!token) return alert("You must be logged in to vote!");
 
       const res = await axios.post(
-        `http://localhost:5000/post/${postId}/downvote`,
+        `https://initial-note-backend-repoo.onrender.com/post/${postId}/downvote`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

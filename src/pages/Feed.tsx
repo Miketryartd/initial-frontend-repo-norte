@@ -23,13 +23,13 @@ function Feed(){
 
             try{
 
-                const response = await fetch("http://localhost:5000/files-fetch");
+                const response = await fetch("https://initial-note-backend-repoo.onrender.com/files-fetch");
                 if (!response.ok) throw new Error("Failed to fetch");
                 const data = await response.json();
                 setPosts(data);
               
 
-            } catch (err){
+            } catch {
                 setError("Error fetching feed.");
 
             };
@@ -56,7 +56,7 @@ function Feed(){
                   <span className="text-gray-400 font-bold">PDF Document</span>
                 ) : (
                     <img 
-                    src={`http://localhost:5000/${post.filePaths[0].replace(/\\/g, '/')}`} 
+                    src={`https://initial-note-backend-repoo.onrender.com/${post.filePaths[0].replace(/\\/g, '/')}`} 
                     alt="Preview" 
                     className="h-full w-full object-cover"
                     onError={(e) => { 

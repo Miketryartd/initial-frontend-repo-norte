@@ -1,7 +1,7 @@
 
 import Layout from "./LayoutWrapper";
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Votes from "./Votes";
 
@@ -26,25 +26,25 @@ function Post (){
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
+        if (!id) {
+          setLoading(false);
+          return;
+        }
+      
         const fetchPost = async () => {
-            try {
-                
-                const response = await axios.get<PostData>(`http://localhost:5000/post/${id}`);
-                console.log("Data received:", response.data);
-                setPost(response.data);
-                setLoading(false);
-            } catch (err) {
-                console.error('Error fetching post', err);
-                setLoading(false);
-            }
-        };
-
-        if (id ){
-            fetchPost();
-        } else {
+          try {
+            const response = await axios.get<PostData>(`http://localhost:5000/post/${id}`);
+            setPost(response.data);
+          } catch (err) {
+            console.error(err);
+          } finally {
             setLoading(false);
+          }
         };
-    }, [id]);
+      
+        fetchPost();
+      }, [id]);
+      
 
     if (loading) return <p>Loading...</p>;
     if (!post) return <p>Post not found!</p>;
@@ -71,12 +71,12 @@ post.filePaths.length === 1 ? (
 
   <div className="flex justify-center">
     <a
-      href={`http://localhost:5000/${post.filePaths[0]}`}
+      href={`https://initial-note-backend-repoo.onrender.com/${post.filePaths[0]}`}
       target="_blank"
       rel="noopener noreferrer"
     >
       <img
-        src={`http://localhost:5000/${post.filePaths[0]}`}
+        src={`https://initial-note-backend-repoo.onrender.com/${post.filePaths[0]}`}
         alt="uploaded"
         className="max-w-full h-80 object-contain bg-gray-100 rounded-xl"
       />
@@ -90,12 +90,12 @@ post.filePaths.length === 1 ? (
     {post.filePaths.map((path, index) => (
       <a
         key={index}
-        href={`http://localhost:5000/${path}`}
+        href={`https://initial-note-backend-repoo.onrender.com/${path}`}
         target="_blank"
         rel="noopener noreferrer"
       >
         <img
-          src={`http://localhost:5000/${path}`}
+          src={`https://initial-note-backend-repoo.onrender.com/${path}`}
           alt="uploaded"
           className="w-full h-60 object-contain bg-gray-100 rounded-xl w-fu"
         />

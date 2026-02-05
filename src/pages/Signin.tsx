@@ -33,7 +33,7 @@ function Signin() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch('https://initial-note-backend-repoo.onrender.com/login', {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(accountData)

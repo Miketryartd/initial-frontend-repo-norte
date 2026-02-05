@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+interface User {
+  id: string;
+  username: string;
+  email?: string;
+}
+
 const AuthChecker = () => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -16,7 +22,7 @@ const AuthChecker = () => {
       }
 
       try {
-        const res = await fetch("http://localhost:5000/auth/me", {
+        const res = await fetch("https://initial-note-backend-repoo.onrender.com/auth/me", {
           headers: {
             Authorization: `Bearer ${token}`, 
           },

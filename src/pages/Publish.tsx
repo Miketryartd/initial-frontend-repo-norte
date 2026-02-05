@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, } from "react";
 import Layout from "./LayoutWrapper";
-import { useNavigate } from "react-router-dom";
+
 
 
 function Publish() {
@@ -9,7 +9,6 @@ function Publish() {
   const [subject, setSubject] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
-  const nav = useNavigate();
 
   const publish = async (e: React.FormEvent) =>{
    e.preventDefault();
@@ -26,7 +25,7 @@ function Publish() {
  
 
    try {
-    const response = await fetch ('http://localhost:5000/files', {
+    const response = await fetch ('https://initial-note-backend-repoo.onrender.com/files', {
       method: "POST",
       headers: {
         'Authorization' : `Bearer ${localStorage.getItem("token")}`
