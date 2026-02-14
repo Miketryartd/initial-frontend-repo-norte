@@ -13,7 +13,10 @@ import Feed from "./pages/Feed.tsx";
 import ProtectedRoute from './pages/ProtectedRoute.tsx'
 import AuthChecker from './pages/AuthChecker.tsx'
 import Post from './pages/Post.tsx'
-
+import CreateQuiz from './pages/CreateQuiz.tsx'
+import Quizzes from './pages/Quizzes.tsx'
+import QuizFeed from './pages/QuizFeed.tsx'
+import Bookmarks from './pages/User_Bookmarks.tsx'
 
 
 
@@ -32,11 +35,15 @@ createRoot(document.getElementById('root')!).render(
 
 
     <Route element={<ProtectedRoute/>}> 
+    <Route path='/Create-Quiz' element={<CreateQuiz/>}></Route>
     <Route path='/Post/:id' element={<Post/>}></Route>
     <Route path='/AuthChecker' element={<AuthChecker/>}></Route>
     <Route path='/Dashboard' element={<Dashboard/>}></Route>
     <Route path='/Publish' element={<Publish/>}></Route>
     <Route path='/Feed' element={<Feed/>}></Route>
+    <Route path='/Quiz-Feed' element={<QuizFeed/>}></Route>
+    <Route path='/Quiz/:id' element={<Quizzes/>}></Route>
+    <Route path='/Bookmarks' element={<Bookmarks/>}></Route>
     </Route>
 
 

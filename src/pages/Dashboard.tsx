@@ -19,9 +19,27 @@ function Dashboard() {
   </Link>
 </div>            <div className="p-3 bg-slate-100 text-sky-600 rounded-lg font-bold w-full">
   <Link className="block w-full cursor-pointer " to='/Publish'>
-    Publish
+    Publish Notes
   </Link>
 </div>
+
+<div className="p-3 bg-slate-100 text-sky-600 rounded-lg font-bold w-full">
+  <Link className="block w-full cursor-pointer " to='/Quiz-Feed'>
+    Quizzes
+  </Link>
+</div>
+<div className="p-3 bg-slate-100 text-sky-600 rounded-lg font-bold w-full">
+  <Link className="block w-full cursor-pointer " to='/Create-Quiz'>
+    Create Quiz
+  </Link>
+</div>
+<div className="p-3 bg-slate-100 text-sky-600 rounded-lg font-bold w-full">
+  <Link className="block w-full cursor-pointer " to='/Bookmarks'>
+    Saved Notes
+  </Link>
+</div>
+    
+    
              </div>
             </nav>
         </aside>

@@ -4,15 +4,21 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Votes from "./Votes";
+import Comments from "./Comments";
+import Bookmark from "./Bookmark";
+import { DynamicUrl } from "./DynamicUrl";
+
 
 
 interface PostData {
     _id: string;
+    username: string;
     subject: string;
     description: string;
     upVotes: number;
 downVotes: number;
     filePaths: string[];
+    coverPhoto?: string;
     userId?: {
         username: string;
     };
@@ -33,7 +39,7 @@ function Post (){
       
         const fetchPost = async () => {
           try {
-            const response = await axios.get<PostData>(`http://localhost:5000/post/${id}`);
+            const response = await axios.get<PostData>(`${DynamicUrl()}/post/${id}`);
             setPost(response.data);
           } catch (err) {
             console.error(err);
@@ -57,58 +63,51 @@ function Post (){
       
             
               <div className="space-y-2 border-b pb-4">
+                <div className="flex flex-row justify-between">
                 <h1 className="text-3xl font-bold">{post.subject}</h1>
+                <Bookmark ps={post}></Bookmark>
+                </div>
                 <p className="text-sm text-gray-500">
-                  Posted by <span className="font-medium">{post.userId?.username}</span>
+                  Posted by <span className="font-medium">{post.username}</span>
                 </p>
+                
               </div>
       
         
-{post.filePaths.length > 0 && (
-
-post.filePaths.length === 1 ? (
-
-
-  <div className="flex justify-center">
-    <a
-      href={`https://initial-note-backend-repoo.onrender.com/${post.filePaths[0]}`}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <img
-        src={`https://initial-note-backend-repoo.onrender.com/${post.filePaths[0]}`}
-        alt="uploaded"
-        className="max-w-full h-80 object-contain bg-gray-100 rounded-xl"
-      />
-    </a>
-  </div>
-
-) : (
-
-
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    {post.filePaths.map((path, index) => (
+              {post.filePaths.length > 0 && (
+  post.filePaths.length === 1 ? (
+    <div className="flex justify-center bg-gray-400">
       <a
-        key={index}
-        href={`https://initial-note-backend-repoo.onrender.com/${path}`}
+        href={`${DynamicUrl()}/${post.filePaths[0]}`}
         target="_blank"
         rel="noopener noreferrer"
       >
         <img
-          src={`https://initial-note-backend-repoo.onrender.com/${path}`}
+          src={`${DynamicUrl()}/${post.coverPhoto}`}
           alt="uploaded"
-          className="w-full h-60 object-contain bg-gray-100 rounded-xl w-fu"
+          className="max-w-full h-80 object-contain bg-gray-100 "
         />
       </a>
-    ))}
-  </div>
-
- 
-
-)
-
+    </div>
+  ) : (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {post.filePaths.map((path, index) => (
+        <a
+          key={index}
+          href={`${DynamicUrl()}/${path}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src={`${DynamicUrl()}/${path}`}
+            alt="uploaded"
+            className="w-full h-60 object-contain bg-gray-100 rounded-xl"
+          />
+        </a>
+      ))}
+    </div>
+  )
 )}
-
 
              
       
@@ -130,6 +129,9 @@ post.filePaths.length === 1 ? (
     initialDownVotes={post.downVotes}
   />
 )}
+<Comments postId={id}/>
+
+
 
         </Layout>
       );

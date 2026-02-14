@@ -1,5 +1,7 @@
 import { useState, } from "react";
 import Layout from "./LayoutWrapper";
+import { DynamicUrl } from "./DynamicUrl";
+
 
 
 
@@ -8,6 +10,9 @@ function Publish() {
   const [file, setFile] = useState<FileList | null>(null);
   const [subject, setSubject] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [cover, setCover] = useState<File | null>(null);
+  const [coverPreview, setCoverPreview] = useState<string | null>(null);
+
 
 
   const publish = async (e: React.FormEvent) =>{
@@ -22,10 +27,19 @@ function Publish() {
   formData.append("subject", subject);
   formData.append("description", description);
 
+if (cover) {
+  formData.append("cover_photo", cover);
+}
+
+if (!file || !subject || !description || !cover ){
+  alert("Please complete everything.");
+  return;
+}
+
  
 
    try {
-    const response = await fetch ('https://initial-note-backend-repoo.onrender.com/files', {
+    const response = await fetch (`${DynamicUrl()}/files`, {
       method: "POST",
       headers: {
         'Authorization' : `Bearer ${localStorage.getItem("token")}`
@@ -53,16 +67,85 @@ function Publish() {
 
       
         <form className="space-y-5" action="/files" method="POST" encType="multipart/form-data" onSubmit={publish}>
-          <div className="group">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Select File</label>
-            <input 
-              type="file" 
-              name="file"
-              multiple
-              onChange={(e) => setFile(e.target.files)}
-              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-50 file:text-sky-700 hover:file:bg-sky-100 transition-all cursor-pointer"
-            />
-          </div>
+        <div className="flex flex-row gap-5">
+
+
+<div className="flex-1">
+  <label className="block text-sm font-semibold text-gray-700 mb-2">
+    Select File / Photo
+  </label>
+
+  <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-sky-200 rounded-2xl cursor-pointer hover:bg-sky-50 transition-all">
+    <span className="text-sm font-medium text-sky-600">
+      Click to upload files
+    </span>
+    <span className="text-xs text-gray-400 mt-1">
+      PDF, Images, Notes
+    </span>
+
+    <input
+      type="file"
+      name="file"
+      multiple
+      onChange={(e) => setFile(e.target.files)}
+      className="hidden"
+    />
+    {file && (
+  <div className="mt-2 text-xs text-gray-500 space-y-1">
+    {Array.from(file).map((f, i) => (
+      <p key={i}>📄 {f.name}</p>
+    ))}
+  </div>
+)}
+
+  </label>
+</div>
+
+
+<div className="flex-1">
+  <label className="block text-sm font-semibold text-gray-700 mb-2">
+    Select Cover Photo
+  </label>
+
+  <label className="relative flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-sky-200 rounded-2xl cursor-pointer hover:bg-sky-50 transition-all">
+
+    <span className="text-sm font-medium text-sky-600">
+      Upload Cover Image
+    </span>
+    <span className="text-xs text-gray-400 mt-1">
+      JPG / PNG recommended
+    </span>
+
+    <input
+      type="file"
+      name="photo"
+      onChange={(e) => {
+        const selected = e.target.files?.[0] || null;
+        setCover(selected);
+      
+        if (selected) {
+          setCoverPreview(URL.createObjectURL(selected));
+        }
+      }}
+      
+      className="hidden"
+    
+    />
+
+{coverPreview && (
+  <img
+    src={coverPreview}
+    alt="Cover Preview"
+    className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl"
+  />
+)}
+
+  </label>
+  
+</div>
+
+</div>
+
 
           <input 
             className="w-full border border-gray-300 p-4 rounded-xl outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all" 
