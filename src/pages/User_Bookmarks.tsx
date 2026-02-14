@@ -72,7 +72,7 @@ function User_Bookmarks(){
     bookmark.postId.coverPhoto
       ? `${DynamicUrl()}/${bookmark.postId?.coverPhoto.replace(/\\/g, "/")}`
       : "/placeholder.png"
-  } alt="cover-photo" className="h-20 rounded-md w-20 object-cover"></img>
+  } alt="cover-photo" className="h-20 rounded-md w-20 object-cover" loading="lazy"></img>
                     <h1>Posted by <span>{bookmark.postId?.username}</span> </h1>
               <h3>Subject <span>{bookmark.postId?.subject}</span> </h3>
               <h3>Description <span>{bookmark.postId?.description}</span></h3>
