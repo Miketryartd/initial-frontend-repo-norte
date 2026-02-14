@@ -3,7 +3,10 @@ import { Navigate, Outlet } from "react-router-dom";
 const ProtectedRoute = () => {
   const token = localStorage.getItem("token");
 
-  // Only render children (Outlet) if a valid token exists
+  if(!token){
+    <Navigate to="/" replace/>
+  }
+
   return (token && token !== "undefined") 
     ? <Outlet /> 
     : <Navigate to="/" replace />;

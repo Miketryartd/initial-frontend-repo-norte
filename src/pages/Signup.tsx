@@ -1,10 +1,11 @@
 import github_icon from "../images/github-logo.png";
 import google_icon from "../images/google icon.png";
-
+import { DynamicUrl } from "../pages/DynamicUrl";
 import '../styles/Signup.css'
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthSidebar from "./AuthSidebar";
+
 
 function Signup() {
   const [email, setEmail] = useState<string>('');
@@ -24,7 +25,7 @@ function Signup() {
 
     setIsLoading(true);
     try {
-      const response = await fetch('https://initial-note-backend-repoo.onrender.com/registration', {
+      const response = await fetch(`${DynamicUrl()}/registration`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email_address: email, username: name, password }),

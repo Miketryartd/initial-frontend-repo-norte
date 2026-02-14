@@ -4,6 +4,7 @@ import '../styles/Signup.css'
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthSidebar from "./AuthSidebar";
+import { DynamicUrl } from "./DynamicUrl";
 
 function Signin() {
   const nav = useNavigate();
@@ -33,7 +34,7 @@ function Signin() {
     }
 
     try {
-      const response = await fetch('https://initial-note-backend-repoo.onrender.com/login', {
+      const response = await fetch(`${DynamicUrl()}/login`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(accountData)
