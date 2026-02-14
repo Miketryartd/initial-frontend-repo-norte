@@ -72,6 +72,7 @@ function Feed(){
                       ? `${DynamicUrl()}/${post.coverPhoto.replace(/\\/g, '/')}`
                       : "https://placehold.co/150?text=No+Image"
                   }
+                   loading="lazy"
                   alt="Preview"
                   className="h-full w-full object-cover"
                   onError={(e) => {

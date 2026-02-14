@@ -100,6 +100,7 @@ function Post (){
         >
           <img
             src={`${DynamicUrl()}/${path}`}
+            loading="lazy"
             alt="uploaded"
             className="w-full h-60 object-contain bg-gray-100 rounded-xl"
           />
