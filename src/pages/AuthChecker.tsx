@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { DynamicUrl } from "./DynamicUrl";
 
 interface User {
   id: string;
@@ -15,14 +16,14 @@ const AuthChecker = () => {
   useEffect(() => {
     const checkUser = async () => {
       const token = localStorage.getItem("token");
-
+    
       if (!token) {
         setLoading(false);
         return;
       }
 
       try {
-        const res = await fetch("https://initial-note-backend-repoo.onrender.com/auth/me", {
+        const res = await fetch(`${DynamicUrl()}/auth/me`, {
           headers: {
             Authorization: `Bearer ${token}`, 
           },
