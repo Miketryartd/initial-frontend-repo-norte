@@ -1,5 +1,5 @@
 // src/components/AuthSidebar.tsx
-import syncro_logo from "../images/Syncro logo.png";
+import syncro_logo from "../images/Syncro logo no text .png";
 
 const AuthSidebar = () => {
   return (
