@@ -1,52 +1,61 @@
 import { useState, useEffect } from 'react'
 import '../styles/Home.css'
 import { Link } from 'react-router-dom'
-import hero_image from "../images/Hero image.png";
+
 import hero_wide from '../images/hero image wide.png';
-import syncro_logo from "../images/Syncro logo.png";
+import syncro_logo from "../images/Syncro logo no text .png";
+import hero_image_v2 from "../images/mike2.png";
 function Home() {
 
 
 
 //Live feature displaying message//
-  const  messages = ["Hey","Ready to study?", "Yeah, let's start!", "I love this app!!", "I wanna study computer science.", "You up for biology?"];
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [shownMessages, setShownMessages] = useState<string[]>([]);
-  const [isTyping, setIsTyping] = useState(false);
+const messages = [
+  "Hey nice reviewer!",
+  "This helped me. Thanks!",
+  "Omg, I needed this.",
+  "I love this app!!",
+  "Awesome notes!",
+  "Lifesaver"
+];
 
-  useEffect(() => {
-   
-    if (currentIndex >= messages.length) {
-      const resetTimer = setTimeout(() => {
-        setShownMessages([]);
-        setCurrentIndex(0);
-      }, 3000); 
-  
-      return () => clearTimeout(resetTimer);
-    }
-  
-   
-    const typingTimer = setTimeout(() => {
-      setIsTyping(false);
+const [currentIndex, setCurrentIndex] = useState(0);
+const [shownMessages, setShownMessages] = useState<string[]>([]);
+const [isTyping, setIsTyping] = useState(false);
+useEffect(() => {
+  if (currentIndex >= messages.length) {
+    const resetTimer = setTimeout(() => {
+      setShownMessages([]);
+      setCurrentIndex(0);
+    }, 4000);
+
+    return () => clearTimeout(resetTimer);
+  }
+
+  const typingStart = setTimeout(() => {
     setIsTyping(true);
-  
-   
-  
-      setShownMessages((prev) => [...prev, messages[currentIndex]]);
-      setCurrentIndex((prev) => prev + 1);
-    }, 1500);
-  
-    return () => clearTimeout(typingTimer);
-  }, [currentIndex]);
-  
+  }, 300);
+
+
+  const messageTimer = setTimeout(() => {
+    setShownMessages(prev => [...prev, messages[currentIndex]]);
+    setCurrentIndex(prev => prev + 1);
+    setIsTyping(false);
+  }, 1500);
+
+  return () => {
+    clearTimeout(typingStart);
+    clearTimeout(messageTimer);
+  };
+}, [currentIndex]);
 
   return (
     <>
     {/* Header Section */}
-    <div className="flex items-center justify-between px-8 border-b border-sky-100 border-solid p-4">
-     <img src={syncro_logo} className='h-20 w-20 object-cover'></img>
+    <div  className="flex items-center justify-between px-4 md:px-8 border-b border-sky-100 border-solid py-3 flex-wrap gap-3">
+     <img src={syncro_logo} className='h-14 w-14 md:h-20 md:w-20 object-cover'></img>
 
-     <div className="flex space-x-4">
+     <div className="flex space-x-4 text-sm md:text-base flex-wrap">
      <Link to='https://www.linkedin.com/in/michael-oliver-m-lea%C3%B1o-jr-42617938a/'><h1>LinkedIn</h1></Link>
        <Link to='https://github.com/Miketryartd'><h1>Github</h1></Link>
        <Link to='/Signup'><h1><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" /><path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" /></svg></h1></Link>
@@ -55,50 +64,88 @@ function Home() {
     </div>
     {/* Hero Section */}
  
-     <div className='relative w-full h-full'>
-      <img
-      src={hero_image}
-      alt='Hero'
-      className='w-full h-full object-cover'></img>
+    <div className="relative w-full h-[420px] sm:h-[520px] md:h-[600px] overflow-hidden">
 
-      
-     </div>
+  <img
+    src={hero_image_v2}
+    alt="Syncro Hero"
+    className="absolute inset-0 w-full h-full object-cover"
+  />
 
-     {/* How it works */}
+ 
+  <div className="absolute inset-0 bg-black/50"></div>
 
-     <div className="flex justify-around mt-20">
+ 
+  <div className="relative z-10 flex flex-col items-center justify-center text-center h-full px-6">
+    
+    <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white tracking-tight">
+    Share Notes. Test Knowledge. Study Smarter.
+    </h1>
 
-  <div className="flex flex-col items-center text-center">
-    <div className="bg-sky-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4">
-      1
+    <p className="mt-4 max-w-2xl text-white/90 text-base sm:text-lg md:text-xl">
+    Syncro is your student hub for uploading files, discussing lessons,
+    and creating quizzes — all in one organized platform.
+
+    </p>
+
+    <div className="mt-8 flex gap-4 flex-wrap justify-center">
+      <Link
+        to="/Signup"
+        className="bg-sky-500 hover:bg-sky-600 transition px-6 py-3 rounded-xl text-white font-semibold shadow-lg"
+      >
+        Get Started
+      </Link>
+
+      <a
+        href="#live-preview"
+        className="bg-white/10 backdrop-blur hover:bg-white/20 transition px-6 py-3 rounded-xl text-white font-semibold border border-white/30"
+      >
+        See Live Demo
+      </a>
     </div>
-    <h3 className="font-bold mb-2">Create Room</h3>
-    <p>Start a room instantly with one click.</p>
-  </div>
-
-  <div className="flex flex-col items-center text-center">
-    <div className="bg-sky-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4">
-      2
-    </div>
-    <h3 className="font-bold mb-2">Share Link</h3>
-    <p>Invite friends by sharing your room code.</p>
-  </div>
-
-  <div className="flex flex-col items-center text-center">
-    <div className="bg-sky-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4">
-      3
-    </div>
-    <h3 className="font-bold mb-2">Collaborate Live</h3>
-    <p>Chat, share notes, and work together in real-time.</p>
 
   </div>
 </div>
+
+
+
+
+   {/* How it works */}
+
+<div className="flex justify-center mt-16 px-6">
+
+<div className="flex flex-col items-center text-center max-w-xs">
+  <div className="bg-sky-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4">
+    1
+  </div>
+  <h3 className="font-bold mb-2">Upload Files</h3>
+  <p>Share notes, reviewers, and study materials with classmates.</p>
+</div>
+
+<div className="flex flex-col items-center text-center max-w-xs">
+  <div className="bg-sky-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4">
+    2
+  </div>
+  <h3 className="font-bold mb-2">Discuss & Like</h3>
+  <p>Comment on posts and like helpful resources from other students.</p>
+</div>
+
+<div className="flex flex-col items-center text-center max-w-xs">
+  <div className="bg-sky-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4">
+    3
+  </div>
+  <h3 className="font-bold mb-2">Create Quizzes</h3>
+  <p>Test your knowledge and help others review smarter.</p>
+</div>
+
+</div>
+
 
 {/* Benefits */}
 
 
 
-<div className="flex justify-around mt-20 gap-4 m-10">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mt-10 m-5 gap-6">
 
 <div className="flex flex-col items-center text-center bg-linear-to-b from white-500 to-sky-100/70  h-[250px] rounded-[10px] shadow-xl shadow-neutral-100 w-full">
   <div className="bg-red-400 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 mt-10">
@@ -110,25 +157,26 @@ function Home() {
 
 <div className="flex flex-col items-center text-center bg-linear-to-b from white-500 to-sky-100/70 h-[250px] rounded-[10px] shadow-xl shadow-neutral-100 w-full">
   <div className="bg-orange-400 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 mt-10">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-bubble-text"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12.4 2l.253 .005a6.34 6.34 0 0 1 5.235 3.166l.089 .163l.178 .039a6.33 6.33 0 0 1 4.254 3.406l.105 .228a6.334 6.334 0 0 1 -5.74 8.865l-.144 -.002l-.037 .052a5.26 5.26 0 0 1 -5.458 1.926l-.186 -.051l-3.435 2.06a1 1 0 0 1 -1.508 -.743l-.006 -.114v-2.435l-.055 -.026a3.67 3.67 0 0 1 -1.554 -1.498l-.102 -.199a3.67 3.67 0 0 1 -.312 -2.14l.038 -.21l-.116 -.092a5.8 5.8 0 0 1 -1.887 -6.025l.071 -.238a5.8 5.8 0 0 1 5.42 -4.004h.157l.15 -.165a6.33 6.33 0 0 1 4.33 -1.963zm1.6 11h-5a1 1 0 0 0 0 2h5a1 1 0 0 0 0 -2m3 -4h-10a1 1 0 1 0 0 2h10a1 1 0 0 0 0 -2" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-folder"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 3a1 1 0 0 1 .608 .206l.1 .087l2.706 2.707h6.586a3 3 0 0 1 2.995 2.824l.005 .176v8a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-11a3 3 0 0 1 2.824 -2.995l.176 -.005h4z" /></svg>
   </div>
-  <h3 className="font-bold mb-2">Quick Chat</h3>
-  <p className='m-4'>Send messages instantly to your team.</p>
+  <h3 className="font-bold mb-2">File Sharing</h3>
+  <p className='m-4'>Upload and access study materials anytime.</p>
 </div>
 
 <div className="flex flex-col items-center text-center bg-linear-to-b from white-500 to-sky-100/70 h-[250px] rounded-[10px] shadow-xl shadow-neutral-100  w-full">
   <div className="bg-yellow-400 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 mt-10">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-folder"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 3a1 1 0 0 1 .608 .206l.1 .087l2.706 2.707h6.586a3 3 0 0 1 2.995 2.824l.005 .176v8a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-11a3 3 0 0 1 2.824 -2.995l.176 -.005h4z" /></svg>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-bubble-text"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12.4 2l.253 .005a6.34 6.34 0 0 1 5.235 3.166l.089 .163l.178 .039a6.33 6.33 0 0 1 4.254 3.406l.105 .228a6.334 6.334 0 0 1 -5.74 8.865l-.144 -.002l-.037 .052a5.26 5.26 0 0 1 -5.458 1.926l-.186 -.051l-3.435 2.06a1 1 0 0 1 -1.508 -.743l-.006 -.114v-2.435l-.055 -.026a3.67 3.67 0 0 1 -1.554 -1.498l-.102 -.199a3.67 3.67 0 0 1 -.312 -2.14l.038 -.21l-.116 -.092a5.8 5.8 0 0 1 -1.887 -6.025l.071 -.238a5.8 5.8 0 0 1 5.42 -4.004h.157l.15 -.165a6.33 6.33 0 0 1 4.33 -1.963zm1.6 11h-5a1 1 0 0 0 0 2h5a1 1 0 0 0 0 -2m3 -4h-10a1 1 0 1 0 0 2h10a1 1 0 0 0 0 -2" /></svg>
   </div>
-  <h3 className="font-bold mb-2">Organize Tasks</h3>
-  <p className='m-4'>Create and manage tasks or to-dos together.</p>
+  <h3 className="font-bold mb-2">Smart Discussions</h3>
+  <p className='m-4'>Comment on posts and learn from the community.</p>
 
 </div>
 <div className="flex flex-col items-center text-center bg-linear-to-b from white-500 to-sky-100/70 h-[250px] rounded-[10px] shadow-xl shadow-neutral-100 w-full">
   <div className="bg-lime-400 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 mt-10">
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-writing"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 8v9a1 1 0 0 1 -.293 .707l-2 2a1 1 0 0 1 -.112 .097l-.11 .071l-.114 .054l-.105 .035l-.149 .03l-.117 .006h-13a3 3 0 0 1 0 -6h4a1 1 0 0 0 0 -2h-3a1 1 0 0 1 0 -2h3a3 3 0 0 1 0 6h-4a1 1 0 0 0 0 2h10.585l-.292 -.293a1 1 0 0 1 -.293 -.707v-9zm-3 -6c1.673 0 3 1.327 3 3v1h-6v-1c0 -1.673 1.327 -3 3 -3" /></svg>
   </div>
-  <h3 className="font-bold mb-2">Draw Together</h3>
+  <h3 className="font-bold mb-2">Quiz Builder</h3>
   <p className='m-4'>Draw, brainstorm, or sketch ideas in real-time.</p>
 
 </div>
@@ -143,306 +191,96 @@ function Home() {
 </div>
 </div>
   
-    
-    {/* Live Preview*/}
 
-<div className='m-10'>
-  
-  <div className='flex flex-row w-full h-[500px] gap-2 mt-10'>
+<div className="bg-gradient-to-b from-sky-50 to-white py-20">
 
 
+<div  id='live-preview' className="flex flex-col lg:flex-row justify-center items-stretch w-full px-4 py-10 gap-6">
+  <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6 space-y-6 border border-black/10">
 
-<div className='w-150 h-full bg-slate-100 border-1 border-slate-300 relative shadow-[0px_1px_10px_rgba(0,0,0,0.1)]'>
-<div className='w-full bg-white p-2'><h1>7 people in sync</h1></div>
-{isTyping && (
-  <div className="flex items-center gap-2 m-5">
-    <div className="w-8 h-8 bg-sky-400 rounded-full flex items-center justify-center text-white">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 2a5 5 0 1 1 -5 5a5 5 0 0 1 5 -5z" />
-        <path d="M14 14a5 5 0 0 1 5 5v1h-14v-1a5 5 0 0 1 5 -5z" />
-      </svg>
-    </div>
-
-    <div className="bg-sky-200/70 px-4 py-2 rounded-full text-sm">
-      typing…
-    </div>
-  </div>
-)}
-
-   <div>
-
-   {shownMessages.map((msg) => (
-     <div className="flex items-center gap-2 m-5">
-     <div className="w-8 h-8 bg-sky-400 rounded-full flex items-center justify-center text-white">
-       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-         <path d="M12 2a5 5 0 1 1 -5 5a5 5 0 0 1 5 -5z" />
-         <path d="M14 14a5 5 0 0 1 5 5v1h-14v-1a5 5 0 0 1 5 -5z" />
-       </svg>
-     </div>
  
-     <div className="bg-sky-200/70 px-4 py-2 rounded-full text-sm">
-       {msg}
-     </div>
-   </div>
-   ))}
-
-
-
-   </div>
- 
-  <div className='flex flex-row absolute bottom-0 h-[50px] bg-neutral-50  border-slate-300 w-full border-[1px]'>
-   <input type='text' placeholder='Send message' className='w-full h-full outline-none  p-2'></input>
-   <button className=' rounded-full cursor-pointer p-2 '><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="fill-sky-500  icon icon-tabler icons-tabler-filled icon-tabler-arrow-big-right-line"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12.089 3.634a2 2 0 0 0 -1.089 1.78l-.001 2.586h-4.999a1 1 0 0 0 -1 1v6l.007 .117a1 1 0 0 0 .993 .883l4.999 -.001l.001 2.587a2 2 0 0 0 3.414 1.414l6.586 -6.586a2 2 0 0 0 0 -2.828l-6.586 -6.586a2 2 0 0 0 -2.18 -.434l-.145 .068z" /><path d="M3 8a1 1 0 0 1 .993 .883l.007 .117v6a1 1 0 0 1 -1.993 .117l-.007 -.117v-6a1 1 0 0 1 1 -1z" /></svg></button>
+    <div  className="space-y-2 border-b pb-4">
+      <h1 className="text-2xl font-bold">Biology Reviewer</h1>
+      <p className="text-sm text-gray-500">
+        Posted by <span className="font-medium">JuanDelaCruz</span>
+      </p>
     </div>
-</div>
-
-
-<div className='  bg-gray-100 border-gray-300 border-1 w-[100px] h-full flex flex-col  '>
-  <h1 className='w-full bg-white border-b-1 border-gray-300 p-2'>Toolbox</h1>
- 
-
-   <div className='flex flex-col p-5 gap-5'>
-   <h1 className='border-1 w-6 border-gray-500 '><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-typography"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20l3 0" /><path d="M14 20l7 0" /><path d="M6.9 15l6.9 0" /><path d="M10.2 6.3l5.8 13.7" /><path d="M5 20l6 -16l2 0l7 16" /></svg></h1>
-  <h1 className='border-1 w-6 border-gray-500 '><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-bold"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 5h6a3.5 3.5 0 0 1 0 7h-6l0 -7" /><path d="M13 12h1a3.5 3.5 0 0 1 0 7h-7v-7" /></svg></h1>
-  <h1 className='border-1 w-6 border-gray-500'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-italic"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 5l6 0" /><path d="M7 19l6 0" /><path d="M14 5l-4 14" /></svg></h1>
-  <h1 className='border-1 w-6 border-gray-500'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-ballpen"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17.828 2a3 3 0 0 1 1.977 .743l.145 .136l1.171 1.17a3 3 0 0 1 .136 4.1l-.136 .144l-1.706 1.707l2.292 2.293a1 1 0 0 1 .083 1.32l-.083 .094l-4 4a1 1 0 0 1 -1.497 -1.32l.083 -.094l3.292 -3.293l-1.586 -1.585l-7.464 7.464a3.828 3.828 0 0 1 -2.474 1.114l-.233 .008c-.674 0 -1.33 -.178 -1.905 -.508l-1.216 1.214a1 1 0 0 1 -1.497 -1.32l.083 -.094l1.214 -1.216a3.828 3.828 0 0 1 .454 -4.442l.16 -.17l10.586 -10.586a3 3 0 0 1 1.923 -.873l.198 -.006zm0 2a1 1 0 0 0 -.608 .206l-.099 .087l-1.707 1.707l2.586 2.585l1.707 -1.706a1 1 0 0 0 .284 -.576l.01 -.131a1 1 0 0 0 -.207 -.609l-.087 -.099l-1.171 -1.171a1 1 0 0 0 -.708 -.293z" /></svg></h1>
-  <h1 className='border-1 w-6 border-gray-500'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-square-minus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19 2a3 3 0 0 1 3 3v14a3 3 0 0 1 -3 3h-14a3 3 0 0 1 -3 -3v-14a3 3 0 0 1 3 -3zm-4 9h-6l-.117 .007a1 1 0 0 0 .117 1.993h6l.117 -.007a1 1 0 0 0 -.117 -1.993z" /></svg></h1>
-   </div>
 
    
+    <div className="flex justify-center">
+      <div className="w-full h-56 bg-gray-100 rounded-xl flex items-center justify-center relative overflow-hidden">
 
-  </div>
+      
+        <div className="flex flex-col items-center">
+          <span className="text-5xl">📄</span>
+          <span className="text-sm text-gray-600 mt-2">
+            Biology Reviewer.pdf
+          </span>
+        </div>
 
-
-<div className='w-full h-full bg-white-100 border-1 border-gray-300'>
- 
-
-<div className='flex items-center text-center justify-center mt-50'>
- <div className='flex flex-col'>
- <h1 className='font-bold text-xl'>BUSINESS IDEA - MIKE :)</h1>
-  <h1>Project Name</h1>
-  <h3>"(NoteSpire)"</h3>
- </div>
-
-
-  <h1 className='animate-[moveCursor_5s_infinite_ease-in-out]'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-pointer"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3.039 4.277l3.904 13.563c.185 .837 .92 1.516 1.831 1.642l.17 .016a2.2 2.2 0 0 0 1.982 -1.006l.045 -.078l1.4 -2.072l4.05 4.05a2.067 2.067 0 0 0 2.924 0l1.047 -1.047c.388 -.388 .606 -.913 .606 -1.461l-.008 -.182a2.067 2.067 0 0 0 -.598 -1.28l-4.047 -4.048l2.103 -1.412c.726 -.385 1.18 -1.278 1.053 -2.189a2.2 2.2 0 0 0 -1.701 -1.845l-13.524 -3.89a1 1 0 0 0 -1.236 1.24z" /></svg></h1>
-
-
-<div className='bottom-0 absolute'>
-  <h1>toolbar</h1>
-  </div>
-
-</div>
-
-</div>
-
-
-<div className='w-120 h-full bg-neutral-100 flex flex-col gap-4 items-start  p-5 relative scroll-smooth max-h-500 overflow-auto
-'>
-
-
-
-<div className="flex items-center gap-2 w-full">
-
-  <div className="w-12 h-12 bg-sky-400 rounded-full flex items-center justify-center text-white shrink-0">
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2a5 5 0 1 1 -5 5a5 5 0 0 1 5 -5z" />
-      <path d="M14 14a5 5 0 0 1 5 5v1h-14v-1a5 5 0 0 1 5 -5z" />
-    </svg>
-  </div>
-
-
-  <div className="border-b border-gray-300 py-2 w-full text-sm flex items-center justify-between gap-2 min-w-0">
-  
-    <h1 className="font-medium truncate">Michael Oliver M. Jr.</h1>
-    
-   
-    <div className="flex items-center gap-2 shrink-0">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3l18 18" /><path d="M9 5a3 3 0 0 1 6 0v5a3 3 0 0 1 -.13 .874m-2 2a3 3 0 0 1 -3.87 -2.872v-1" /><path d="M5 10a7 7 0 0 0 10.846 5.85m2 -2a6.967 6.967 0 0 0 1.152 -3.85" /><path d="M8 21l8 0" /><path d="M12 17l0 4" />
-      </svg>
-      <div className='bg-green-500 rounded-full w-2.5 h-2.5 shadow-sm'></div>
+        <div className="absolute bottom-2 right-2 bg-black/60 text-white px-2 py-1 text-xs rounded">
+          Preview
+        </div>
+      </div>
     </div>
 
-  </div>
-</div>
 
-
-  <div className="flex items-center gap-2 w-full">
-
-<div className="w-12 h-12 bg-sky-400 rounded-full flex items-center justify-center text-white shrink-0">
-  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2a5 5 0 1 1 -5 5a5 5 0 0 1 5 -5z" />
-    <path d="M14 14a5 5 0 0 1 5 5v1h-14v-1a5 5 0 0 1 5 -5z" />
-  </svg>
-</div>
-
-
-<div className="border-b border-gray-300 py-2 w-full text-sm flex items-center justify-between gap-2 min-w-0">
-
-  <h1 className="font-medium truncate">Moritz Zickermann</h1>
-  
- 
-  <div className="flex items-center gap-2 shrink-0">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3l18 18" /><path d="M9 5a3 3 0 0 1 6 0v5a3 3 0 0 1 -.13 .874m-2 2a3 3 0 0 1 -3.87 -2.872v-1" /><path d="M5 10a7 7 0 0 0 10.846 5.85m2 -2a6.967 6.967 0 0 0 1.152 -3.85" /><path d="M8 21l8 0" /><path d="M12 17l0 4" />
-    </svg>
-    <div className='bg-green-500 rounded-full w-2.5 h-2.5 shadow-sm'></div>
-  </div>
-
-</div>
-</div>
-
-
-
-  <div className="flex items-center gap-2 w-full">
-
-<div className="w-12 h-12 bg-sky-400 rounded-full flex items-center justify-center text-white shrink-0">
-  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2a5 5 0 1 1 -5 5a5 5 0 0 1 5 -5z" />
-    <path d="M14 14a5 5 0 0 1 5 5v1h-14v-1a5 5 0 0 1 5 -5z" />
-  </svg>
-</div>
-
-
-<div className="border-b border-gray-300 py-2 w-full text-sm flex items-center justify-between gap-2 min-w-0">
-
-  <h1 className="font-medium truncate">Eliot</h1>
-  
- 
-  <div className="flex items-center gap-2 shrink-0">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3l18 18" /><path d="M9 5a3 3 0 0 1 6 0v5a3 3 0 0 1 -.13 .874m-2 2a3 3 0 0 1 -3.87 -2.872v-1" /><path d="M5 10a7 7 0 0 0 10.846 5.85m2 -2a6.967 6.967 0 0 0 1.152 -3.85" /><path d="M8 21l8 0" /><path d="M12 17l0 4" />
-    </svg>
-    <div className='bg-green-500 rounded-full w-2.5 h-2.5 shadow-sm'></div>
-  </div>
-
-</div>
-</div>
-
-
-
-  <div className="flex items-center gap-2 w-full">
-
-<div className="w-12 h-12 bg-sky-400 rounded-full flex items-center justify-center text-white shrink-0">
-  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2a5 5 0 1 1 -5 5a5 5 0 0 1 5 -5z" />
-    <path d="M14 14a5 5 0 0 1 5 5v1h-14v-1a5 5 0 0 1 5 -5z" />
-  </svg>
-</div>
-
-
-<div className="border-b border-gray-300 py-2 w-full text-sm flex items-center justify-between gap-2 min-w-0">
-
-  <h1 className="font-medium truncate">Felix John</h1>
-  
- 
-  <div className="flex items-center gap-2 shrink-0">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3l18 18" /><path d="M9 5a3 3 0 0 1 6 0v5a3 3 0 0 1 -.13 .874m-2 2a3 3 0 0 1 -3.87 -2.872v-1" /><path d="M5 10a7 7 0 0 0 10.846 5.85m2 -2a6.967 6.967 0 0 0 1.152 -3.85" /><path d="M8 21l8 0" /><path d="M12 17l0 4" />
-    </svg>
-    <div className='bg-green-500 rounded-full w-2.5 h-2.5 shadow-sm'></div>
-  </div>
-
-</div>
-</div>
-
-
-  <div className="flex items-center gap-2 w-full">
-
-<div className="w-12 h-12 bg-sky-400 rounded-full flex items-center justify-center text-white shrink-0">
-  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2a5 5 0 1 1 -5 5a5 5 0 0 1 5 -5z" />
-    <path d="M14 14a5 5 0 0 1 5 5v1h-14v-1a5 5 0 0 1 5 -5z" />
-  </svg>
-</div>
-
-
-<div className="border-b border-gray-300 py-2 w-full text-sm flex items-center justify-between gap-2 min-w-0">
-
-  <h1 className="font-medium truncate">Linus Beckman</h1>
-  
- 
-  <div className="flex items-center gap-2 shrink-0">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3l18 18" /><path d="M9 5a3 3 0 0 1 6 0v5a3 3 0 0 1 -.13 .874m-2 2a3 3 0 0 1 -3.87 -2.872v-1" /><path d="M5 10a7 7 0 0 0 10.846 5.85m2 -2a6.967 6.967 0 0 0 1.152 -3.85" /><path d="M8 21l8 0" /><path d="M12 17l0 4" />
-    </svg>
-    <div className='bg-green-500 rounded-full w-2.5 h-2.5 shadow-sm'></div>
-  </div>
-
-</div>
-</div>
-
-
-  <div className="flex items-center gap-2 w-full">
-
-<div className="w-12 h-12 bg-sky-400 rounded-full flex items-center justify-center text-white shrink-0">
-  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2a5 5 0 1 1 -5 5a5 5 0 0 1 5 -5z" />
-    <path d="M14 14a5 5 0 0 1 5 5v1h-14v-1a5 5 0 0 1 5 -5z" />
-  </svg>
-</div>
-
-
-<div className="border-b border-gray-300 py-2 w-full text-sm flex items-center justify-between gap-2 min-w-0">
-
-  <h1 className="font-medium truncate">Jane Cruz</h1>
-  
- 
-  <div className="flex items-center gap-2 shrink-0">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3l18 18" /><path d="M9 5a3 3 0 0 1 6 0v5a3 3 0 0 1 -.13 .874m-2 2a3 3 0 0 1 -3.87 -2.872v-1" /><path d="M5 10a7 7 0 0 0 10.846 5.85m2 -2a6.967 6.967 0 0 0 1.152 -3.85" /><path d="M8 21l8 0" /><path d="M12 17l0 4" />
-    </svg>
-    <div className='bg-green-500 rounded-full w-2.5 h-2.5 shadow-sm'></div>
-  </div>
-
-</div>
-</div>
-
-
-
-
-<div className="flex items-center gap-2 w-full">
-
-  <div className="w-12 h-12 bg-sky-400 rounded-full flex items-center justify-center text-white shrink-0">
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2a5 5 0 1 1 -5 5a5 5 0 0 1 5 -5z" />
-      <path d="M14 14a5 5 0 0 1 5 5v1h-14v-1a5 5 0 0 1 5 -5z" />
-    </svg>
-  </div>
-
-
-  <div className="border-b border-gray-300 py-2 w-full text-sm flex items-center justify-between gap-2 min-w-0">
-  
-    <h1 className="font-medium truncate">Crizska E.</h1>
-    
-   
-    <div className="flex items-center gap-2 shrink-0">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3l18 18" /><path d="M9 5a3 3 0 0 1 6 0v5a3 3 0 0 1 -.13 .874m-2 2a3 3 0 0 1 -3.87 -2.872v-1" /><path d="M5 10a7 7 0 0 0 10.846 5.85m2 -2a6.967 6.967 0 0 0 1.152 -3.85" /><path d="M8 21l8 0" /><path d="M12 17l0 4" />
-      </svg>
-      <div className='bg-green-500 rounded-full w-2.5 h-2.5 shadow-sm'></div>
+    <div>
+      <p className="text-gray-700 leading-relaxed">
+        Complete biology reviewer covering cells, genetics, and basic human
+        anatomy. Perfect for midterm preparation.
+      </p>
     </div>
 
+ 
+    <div className="flex items-center justify-between pt-2 border-t">
+
+
+      <div className="flex items-center gap-2 text-gray-700">
+        <span className="text-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-heart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" /></svg></span>
+        <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-thumb-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 21.008a3 3 0 0 0 2.995 -2.823l.005 -.177v-4h2a3 3 0 0 0 2.98 -2.65l.015 -.173l.005 -.177l-.02 -.196l-1.006 -5.032c-.381 -1.625 -1.502 -2.796 -2.81 -2.78l-.164 .008h-8a1 1 0 0 0 -.993 .884l-.007 .116l.001 9.536a1 1 0 0 0 .5 .866a2.998 2.998 0 0 1 1.492 2.396l.007 .202v1a3 3 0 0 0 3 3z" /><path d="M5 14.008a1 1 0 0 0 .993 -.883l.007 -.117v-9a1 1 0 0 0 -.883 -.993l-.117 -.007h-1a2 2 0 0 0 -1.995 1.852l-.005 .15v7a2 2 0 0 0 1.85 1.994l.15 .005h1z" /></svg></span>
+        <span className="font-semibold">24 likes</span>
+      </div>
+
+      
+
+   
+      <div className="flex items-center gap-2 text-gray-700">
+        <span className="text-lg">💬</span>
+        <span className="font-semibold">6 comments</span>
+      </div>
+
+    </div>
   </div>
+    {/* RIGHT — LIVE COMMENTS */}
+    <div className="w-full lg:w-80 bg-white rounded-2xl shadow-lg p-4 border border-black/10">
+      <h2 className="font-bold mb-3">Live Comments</h2>
+
+      <div className="space-y-2 max-h-64 overflow-hidden">
+        {shownMessages.map((msg, i) => (
+          <div
+            key={i}
+            className="bg-gray-100 px-3 py-2 rounded-xl text-sm w-fit max-w-full"
+          >
+            {msg}
+          </div>
+        ))}
+
+        {isTyping && (
+          <div className="text-xs text-gray-500 animate-pulse">
+            Someone is typing...
+          </div>
+        )}
+      </div>
+    </div>
 </div>
 
-     
 
 
 </div>
 
 
-
-  </div>
-  
-<div className=' text-wrap  bg-slate-100 w-full flex flex-row p-2 gap-2'>
-  <h1>Class code: <span className='font-bold'>6exm2p</span></h1>
-  <h1 className='cursor-pointer'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-copy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></h1>
-  <h1 className='cursor-pointer'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-share-3"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 4v4c-6.575 1.028 -9.02 6.788 -10 12c-.037 .206 5.384 -5.962 10 -6v4l8 -7l-8 -7" /></svg></h1>
-  </div>
-
-  </div>
+   
 
 
 

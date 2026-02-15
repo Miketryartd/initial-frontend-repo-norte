@@ -1,44 +1,83 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DynamicUrl } from "./DynamicUrl";
 
-
-
 interface BookmarkProps {
-    ps: {
-      _id: string;
-      title?: string;
-      username?: string;
-      
-    };
-  }
-  
-  function Bookmark({ ps }: BookmarkProps) {
-    const [bookmark, setBookmark] = useState<string[]>([]);
-  
-    const handleBookmark = async () => {
+  ps: {
+    _id: string;
+    title?: string;
+    username?: string;
+  };
+}
+
+function Bookmark({ ps }: BookmarkProps) {
+  const [bookmarked, setBookmarked] = useState(false);
+
+
+  useEffect(() => {
+    const fetchBookmarks = async () => {
       const token = localStorage.getItem("token");
-      if (!token) return alert("User does not exist!");
-  
+      if (!token) return;
+
       try {
-        const res = await fetch(`${DynamicUrl()}/api/bookmark/${ps._id}`, {
-          method: "POST",
+        const res = await fetch(`${DynamicUrl()}/api/bookmarks/ids`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
-  
-        setBookmark(prev =>
-          data?.bookmarked
-            ? [...prev, ps._id]
-            : prev.filter(id => id !== ps._id)
-        );
-        console.log("Data succesfully posted:", bookmark);
-      } catch (error) {
-        console.error("Error bookmarking post:", error);
+        console.log("Bookmarks from API:", data?.bookmarks); 
+      
+        if (data?.bookmarks?.includes(ps._id)) {
+          setBookmarked(true);
+        }
+      } catch (err) {
+        console.error("Failed to fetch bookmarks:", err);
       }
     };
-  
-    return (
-      <button onClick={handleBookmark} className="cursor-pointer">
+
+    fetchBookmarks();
+  }, [ps._id]);
+
+  const handleBookmark = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return alert("User does not exist!");
+
+
+    setBookmarked(prev => !prev);
+
+    try {
+      const res = await fetch(`${DynamicUrl()}/api/bookmark/${ps._id}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = await res.json();
+
+ 
+      if (!data?.bookmarked) {
+        setBookmarked(false);
+      }
+    } catch (error) {
+      console.error("Error bookmarking post:", error);
+   
+      setBookmarked(prev => !prev);
+    }
+  };
+
+  return (
+    <button onClick={handleBookmark} className="cursor-pointer">
+      {bookmarked ? (
+        
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          stroke="none"
+        >
+          <path d="M5 3v18l7-5 7 5V3H5z" />
+        </svg>
+      ) : (
+
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -49,15 +88,13 @@ interface BookmarkProps {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="icon icon-tabler icons-tabler-outline icon-tabler-bookmarks"
         >
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3" />
-          <path d="M11 3h5a3 3 0 0 1 3 3v11" />
+          <path d="M5 3v18l7-5 7 5V3H5z" />
         </svg>
-      </button>
-    );
-  }
-  
-  export default Bookmark;
-  
+      )}
+    </button>
+  );
+}
+
+export default Bookmark;

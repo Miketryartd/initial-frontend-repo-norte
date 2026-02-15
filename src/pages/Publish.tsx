@@ -42,6 +42,7 @@ if (!file || !subject || !description || !cover ){
     const response = await fetch (`${DynamicUrl()}/files`, {
       method: "POST",
       headers: {
+      
         'Authorization' : `Bearer ${localStorage.getItem("token")}`
       },
       body: formData,

@@ -17,6 +17,7 @@ import CreateQuiz from './pages/CreateQuiz.tsx'
 import Quizzes from './pages/Quizzes.tsx'
 import QuizFeed from './pages/QuizFeed.tsx'
 import Bookmarks from './pages/User_Bookmarks.tsx'
+import Profile from './pages/Profile.tsx'
 
 
 
@@ -44,6 +45,7 @@ createRoot(document.getElementById('root')!).render(
     <Route path='/Quiz-Feed' element={<QuizFeed/>}></Route>
     <Route path='/Quiz/:id' element={<Quizzes/>}></Route>
     <Route path='/Bookmarks' element={<Bookmarks/>}></Route>
+    <Route path='/Profile/:id' element={<Profile/>}></Route>
     </Route>
 
 
