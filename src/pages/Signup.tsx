@@ -14,6 +14,11 @@ function Signup() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const handleGithub = async () =>{
+    const API_URL = import.meta.env.VITE_API_URL;
+    window.location.href = `${API_URL}/auth/github`;
+  }
+
   const registration = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -123,8 +128,8 @@ function Signup() {
 
             <div className='flex flex-row mt-2 items-center justify-center gap-4'>
              <GoogleBtn></GoogleBtn>
-              <button type="button" className="cursor-pointer flex-1 flex justify-center border border-gray-200 rounded-md py-2 hover:bg-gray-50 transition-colors active:scale-95 shadow-sm">
-                <img className='h-8 w-8 object-contain' src={github_icon} alt="Github" />
+              <button onClick={handleGithub} type="button" className="cursor-pointer flex-1 flex justify-center border border-gray-200 rounded-md py-2 hover:bg-blue-50 transition-colors active:scale-95 ">
+                <img className='h-6 w-6 object-contain' src={github_icon} alt="Github" />
               </button>
             </div>
           </form>

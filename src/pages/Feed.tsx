@@ -18,7 +18,7 @@ function Feed() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // Helper to get proper image URL
+
   const getImageUrl = (path?: string) => {
     if (!path) return "https://placehold.co/150?text=No+Image";
     if (path.startsWith("http")) return path; 

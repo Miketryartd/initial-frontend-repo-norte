@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom"; // Add useNavigate
 import Notifications from "./Notifications";
 import type { NotificationType } from "./Notifications";
 import { DynamicUrl } from "./DynamicUrl";
@@ -12,10 +12,13 @@ interface Search {
   _id: string;
   username: string;
 }
+
 const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
+  const navigate = useNavigate(); // Add navigate for redirect
   const [hasUnread, setHasUnread] = useState(false);
   const location = useLocation();
   const [notifOpen, setNotifOpen] = useState<boolean>(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false); // State for profile menu
 
   const [search, setSearch] = useState<string>('');
   const [searchResults, setSearchResults] = useState<Search[]>([]);
@@ -29,7 +32,6 @@ const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
       const token = localStorage.getItem("token");
       if (!token) return alert("User not logged in!");
 
-    
       const res = await fetch(`${DynamicUrl()}/api/search?search=${encodeURIComponent(search)}`, {
         method: "GET",
         headers: {
@@ -37,7 +39,6 @@ const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
         },
       });
 
-     
       const text = await res.text();
       let data;
       try {
@@ -59,10 +60,22 @@ const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
     }
   };
 
+  const handleLogout = () => {
+   
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    
+   
+    setProfileMenuOpen(false);
+    
+    
+    navigate('/signin');
+  };
+
   const token = localStorage.getItem("token");
+  
   useEffect(() => {
     const updateNotifications = async () => {
-
       if (!token) return;
 
       if (notifOpen) {
@@ -80,28 +93,46 @@ const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
       setHasUnread(data.some((n) => !n.isRead));
     };
 
-
-    const fetchUser =  async () =>{
-
-      try{
+    const fetchUser = async () => {
+      try {
         if (!token) return;
 
         const res = await fetch(`${DynamicUrl()}/auth/me`, {
-           method: "GET",
-           headers:  {'Authorization': `Bearer ${token}`}
+          method: "GET",
+          headers: { 'Authorization': `Bearer ${token}` }
         });
 
         const data = await res.json();
         setUser(data);
         console.log(data);
-
-      } catch (error){
+      } catch (error) {
         console.error('Error fetching user:', error);
       }
-    }
+    };
+    
     fetchUser();
     updateNotifications();
-  }, [notifOpen]);
+  }, [notifOpen, token]);
+
+  // Close profile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const profileMenu = document.getElementById('profile-menu');
+      const profileButton = document.getElementById('profile-button');
+      
+      if (
+        profileMenu && 
+        !profileMenu.contains(event.target as Node) &&
+        profileButton && 
+        !profileButton.contains(event.target as Node)
+      ) {
+        setProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const getTitle = () => {
     switch (location.pathname) {
@@ -111,9 +142,13 @@ const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
       case "/Quizzes": return "Community Quizzes";
       case "/Create-Quiz": return "Create Quiz";
       case "/Quiz-Feed": return "Community Quiz";
-
       default: return "Syncro";
     }
+  };
+
+  const getUserInitial = () => {
+    if (!user?.username) return "G";
+    return user.username.charAt(0).toUpperCase();
   };
 
   return (
@@ -164,17 +199,75 @@ const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
           <Notifications isOpen={notifOpen} />
         </div>
 
-        <button className="p-2 cursor-pointer rounded-full bg-neutral-100 hover:bg-neutral-200 font-bold">{user?.username.split("", 1) || "G"}</button>
+        {/* Profile button with dropdown menu */}
+        <div className="relative">
+          <button
+            id="profile-button"
+            className="p-2 cursor-pointer rounded-full bg-neutral-100 hover:bg-neutral-200 font-bold w-10 h-10 flex items-center justify-center"
+            onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+          >
+            {getUserInitial()}
+          </button>
+
+          {/* Dropdown menu */}
+          {profileMenuOpen && (
+            <div
+              id="profile-menu"
+              className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-neutral-200"
+            >
+              <Link
+                to={`/Profile/${user?._id}`}
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-neutral-100"
+                onClick={() => setProfileMenuOpen(false)}
+              >
+                <div className="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  Profile
+                </div>
+              </Link>
+              
+            
+              
+              <Link
+                to="/Bookmarks"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-neutral-100"
+                onClick={() => setProfileMenuOpen(false)}
+              >
+                <div className="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                  </svg>
+                  Bookmarks
+                </div>
+              </Link>
+              
+              <hr className="my-1 border-neutral-200" />
+              
+              <button
+                onClick={handleLogout}
+                className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-neutral-100"
+              >
+                <div className="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  Logout
+                </div>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
-      
       {searchResults.length > 0 && (
         <div className="mt-2 bg-white border rounded-md max-h-60 overflow-y-auto shadow-lg">
           <ul>
             {searchResults.map((item, idx) => (
               <li key={idx} className="p-2 hover:bg-neutral-100 cursor-pointer">
                 <Link to={`/Profile/${item._id}`}>
-                {item.username}
+                  {item.username}
                 </Link>
               </li>
             ))}

@@ -111,6 +111,12 @@ function Profile() {
                   src={path}
                   alt="Post file"
                   className="w-full h-40 object-cover rounded-xl border border-zinc-200"
+                  onError={(e) => {
+                    e.currentTarget.src =
+                      "https://placehold.co/150?text=No+Image";
+                  }}
+                  
+                  
                 />
               ))}
             </div>
