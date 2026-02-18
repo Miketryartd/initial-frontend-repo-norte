@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import './index.css'
 import App from './App.tsx'
 import { Routes } from "react-router-dom"
@@ -23,11 +24,14 @@ import Profile from './pages/Profile.tsx'
 
 
 
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+        <GoogleOAuthProvider clientId='570543725935-tdggioth4aghim0fa4ac8c2behp8d50m.apps.googleusercontent.com'>
    <BrowserRouter>
    <Routes>
     
+
    <Route path="/" element={<App/>}></Route>
    <Route path='/Signup' element={<Signup/>}></Route>
    <Route path='/Signin' element={<Signin/>}></Route>
@@ -45,11 +49,12 @@ createRoot(document.getElementById('root')!).render(
     <Route path='/Quiz-Feed' element={<QuizFeed/>}></Route>
     <Route path='/Quiz/:id' element={<Quizzes/>}></Route>
     <Route path='/Bookmarks' element={<Bookmarks/>}></Route>
-    <Route path='/Profile/:id' element={<Profile/>}></Route>
+    <Route path='/Profile/:userId' element={<Profile/>}></Route>
     </Route>
-
+ 
 
    </Routes>
    </BrowserRouter>
+   </GoogleOAuthProvider>
   </StrictMode>,
 )

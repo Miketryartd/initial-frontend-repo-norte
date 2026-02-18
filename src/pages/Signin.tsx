@@ -1,10 +1,10 @@
 import github_icon from "../images/github-logo.png";
-import google_icon from "../images/google icon.png";
 import '../styles/Signup.css'
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthSidebar from "./AuthSidebar";
 import { DynamicUrl } from "./DynamicUrl";
+import GoogleBtn from "./GoogleBtn";
 
 function Signin() {
   const nav = useNavigate();
@@ -132,9 +132,9 @@ function Signin() {
             </div>
 
             <div className='flex flex-row mt-2 items-center justify-center gap-4'>
-              <button type="button" className="cursor-pointer flex-1 flex justify-center border border-gray-200 rounded-md py-2 hover:bg-gray-50 transition-colors active:scale-95 shadow-sm">
-                <img className='h-8 w-8 object-contain' src={google_icon} alt="Google" />
-              </button>
+
+              <GoogleBtn ></GoogleBtn>
+             
               <button type="button" className="cursor-pointer flex-1 flex justify-center border border-gray-200 rounded-md py-2 hover:bg-gray-50 transition-colors active:scale-95 shadow-sm">
                 <img className='h-8 w-8 object-contain' src={github_icon} alt="Github" />
               </button>

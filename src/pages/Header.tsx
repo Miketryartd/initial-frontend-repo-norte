@@ -111,6 +111,7 @@ const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
       case "/Quizzes": return "Community Quizzes";
       case "/Create-Quiz": return "Create Quiz";
       case "/Quiz-Feed": return "Community Quiz";
+
       default: return "Syncro";
     }
   };

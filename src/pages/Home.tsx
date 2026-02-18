@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import '../styles/Home.css'
 import { Link } from 'react-router-dom'
 
-import hero_wide from '../images/hero image wide.png';
+import hero_wide from '../images/Syncro logo no text .png';
 import syncro_logo from "../images/Syncro logo no text .png";
 import hero_image_v2 from "../images/mike2.png";
 function Home() {
@@ -177,7 +177,7 @@ useEffect(() => {
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-writing"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 8v9a1 1 0 0 1 -.293 .707l-2 2a1 1 0 0 1 -.112 .097l-.11 .071l-.114 .054l-.105 .035l-.149 .03l-.117 .006h-13a3 3 0 0 1 0 -6h4a1 1 0 0 0 0 -2h-3a1 1 0 0 1 0 -2h3a3 3 0 0 1 0 6h-4a1 1 0 0 0 0 2h10.585l-.292 -.293a1 1 0 0 1 -.293 -.707v-9zm-3 -6c1.673 0 3 1.327 3 3v1h-6v-1c0 -1.673 1.327 -3 3 -3" /></svg>
   </div>
   <h3 className="font-bold mb-2">Quiz Builder</h3>
-  <p className='m-4'>Draw, brainstorm, or sketch ideas in real-time.</p>
+  <p className='m-4'>Create interesting quizzes and share to the community.</p>
 
 </div>
 
@@ -186,7 +186,8 @@ useEffect(() => {
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-shield-lock"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.998 2l.118 .007l.059 .008l.061 .013l.111 .034a.993 .993 0 0 1 .217 .112l.104 .082l.255 .218a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717a13 13 0 0 1 -9.208 16.25a1 1 0 0 1 -.502 0a13 13 0 0 1 -9.209 -16.25a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.531 -2.527l.263 -.225l.096 -.075a.993 .993 0 0 1 .217 -.112l.112 -.034a.97 .97 0 0 1 .119 -.021l.115 -.007zm.002 7a2 2 0 0 0 -1.995 1.85l-.005 .15l.005 .15a2 2 0 0 0 .995 1.581v1.769l.007 .117a1 1 0 0 0 1.993 -.117l.001 -1.768a2 2 0 0 0 -1.001 -3.732z" /></svg>
   </div>
   <h3 className="font-bold mb-2">Private & Secure</h3>
-  <p className='m-4'>Only invited people can join your room.</p>
+  <p className='m-4'>  Built with secure authentication, protected routes, and encrypted data handling.
+  </p>
 
 </div>
 </div>
@@ -288,12 +289,13 @@ useEffect(() => {
 
 <div className='relative flex flex-col items-center justify-center w-full h-[700px] overflow-hidden'>
   
-
-  <img 
-    src={hero_wide} 
-    className='absolute inset-0 w-full h-full object-cover z-0' 
+<div className="absolute inset-0 flex items-center justify-center z-0">
+  <img
+    src={hero_wide}
+    className="w-full h-full object-contain"
     alt="Background"
   />
+</div>
 
 
   <div className="absolute inset-0 bg-sky-900/40 z-10"></div>
@@ -304,9 +306,9 @@ useEffect(() => {
       Join us today
     </h1>
     
-    <button className="bg-white text-sky-600 px-8 py-3 rounded-full font-bold text-lg shadow-xl hover:scale-105 transition-transform active:scale-95">
+    <Link to='/Signup' className="bg-white text-sky-600 px-8 py-3 rounded-full font-bold text-lg shadow-xl hover:scale-105 transition-transform active:scale-95">
       Get Started
-    </button>
+    </Link>
   </div>
     
 </div>
@@ -319,7 +321,7 @@ useEffect(() => {
     <div className="flex flex-col gap-4">
       <h2 className="text-2xl font-bold tracking-tighter">Syncro</h2>
       <p className="text-sky-200 text-sm">
-        Elevating student collaboration through real-time synchronization.
+        Elevating student collaboration through file-sharing.
       </p>
      
       <div className="flex gap-4 mt-2">
@@ -332,13 +334,17 @@ useEffect(() => {
 
 
     <div>
-      <h3 className="font-bold mb-4">Product</h3>
-      <ul className="text-sky-100 text-sm space-y-2">
-        <li className="hover:text-white cursor-pointer">Whiteboarding</li>
-        <li className="hover:text-white cursor-pointer">PPT Sync</li>
-      </ul>
-    </div>
-
+  <h3 className="font-bold mb-4">Product</h3>
+  <ul className="text-sky-100 text-sm space-y-2">
+    <li className="hover:text-white cursor-pointer">File Sharing</li>
+    <li className="hover:text-white cursor-pointer">Comment & Discuss</li>
+    <li className="hover:text-white cursor-pointer">Like & React</li>
+    <li className="hover:text-white cursor-pointer">Search Profiles</li>
+    <li className="hover:text-white cursor-pointer">Create & Share Quizzes</li>
+    <li className="hover:text-white cursor-pointer">Private & Secure Access</li>
+    <li className="hover:text-white cursor-pointer">Notifications & Updates</li>
+  </ul>
+</div>
   
     <div>
       <h3 className="font-bold mb-4">Join the Waitlist</h3>
