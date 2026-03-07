@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom"; // Add useNavigate
 import Notifications from "./Notifications";
 import type { NotificationType } from "./Notifications";
-import { DynamicUrl } from "./DynamicUrl";
+import { DynamicUrl } from "../utils/api";
 
 interface User {
   username: string;

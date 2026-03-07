@@ -8,10 +8,10 @@ import { BrowserRouter, Route } from "react-router"
 import Home from "./pages/Home.tsx";
 import Signup from "./pages/Signup.tsx";
 import Signin from './pages/Signin.tsx'
-import Dashboard from './pages/Dashboard.tsx'
+import Dashboard from './components/Dashboard.tsx'
 import Publish from './pages/Publish.tsx'
 import Feed from "./pages/Feed.tsx";
-import ProtectedRoute from './pages/ProtectedRoute.tsx'
+import ProtectedRoute from './components/ProtectedRoute.tsx'
 import AuthChecker from './pages/AuthChecker.tsx'
 import Post from './pages/Post.tsx'
 import CreateQuiz from './pages/CreateQuiz.tsx'

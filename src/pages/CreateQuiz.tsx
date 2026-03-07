@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Layout from "./LayoutWrapper";
+import Layout from "../components/LayoutWrapper";
 import axios from "axios";
-import { DynamicUrl } from "./DynamicUrl";
+import { DynamicUrl } from "../utils/api";
 
 type Question = {
   id: string;

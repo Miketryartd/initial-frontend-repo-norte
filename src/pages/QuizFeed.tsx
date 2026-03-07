@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Layout from "./LayoutWrapper";
-import { DynamicUrl } from "./DynamicUrl";
+import Layout from "../components/LayoutWrapper";
+import { DynamicUrl } from "../utils/api";
 
 interface QuizTtile {
     _id: string;

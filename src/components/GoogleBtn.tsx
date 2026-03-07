@@ -1,5 +1,5 @@
 import { GoogleLogin } from "@react-oauth/google";
-import { DynamicUrl } from "./DynamicUrl";
+import { DynamicUrl } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
 function GoogleBtn() {

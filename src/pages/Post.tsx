@@ -1,11 +1,11 @@
-import Layout from "./LayoutWrapper";
+import Layout from "../components/LayoutWrapper";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Votes from "./Votes";
-import Comments from "./Comments";
-import Bookmark from "./Bookmark";
-import { DynamicUrl } from "./DynamicUrl";
+import Votes from "../components/Votes";
+import Comments from "../components/Comments";
+import Bookmark from "../components/Bookmark";
+import { DynamicUrl } from "../utils/api";
 
 interface PostData {
   _id: string;
@@ -169,4 +169,3 @@ function Post() {
 }
 
 export default Post;
-  

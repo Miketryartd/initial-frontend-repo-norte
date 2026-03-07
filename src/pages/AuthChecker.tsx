@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { DynamicUrl } from "./DynamicUrl";
+import { DynamicUrl } from "../utils/api";
 
 interface User {
   id: string;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import Layout from "./LayoutWrapper";
+import Layout from "../components/LayoutWrapper";
 import { Link } from "react-router-dom";
-import { DynamicUrl } from "./DynamicUrl";
+import { DynamicUrl } from "../utils/api";
 
 interface Post {
   _id: string;

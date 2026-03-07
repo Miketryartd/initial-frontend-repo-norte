@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { DynamicUrl } from "./DynamicUrl";
+import { DynamicUrl } from "../utils/api";
 
 interface CommentsProps {
   postId: string | undefined;

@@ -1,10 +1,10 @@
 import github_icon from "../images/github-logo.png";
-import { DynamicUrl } from "../pages/DynamicUrl";
+import { DynamicUrl } from "../utils/api";
 import '../styles/Signup.css'
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import AuthSidebar from "./AuthSidebar";
-import GoogleBtn from "./GoogleBtn";
+import AuthSidebar from "../components/AuthSideBar";
+import GoogleBtn from "../components/GoogleBtn";
 
 
 function Signup() {

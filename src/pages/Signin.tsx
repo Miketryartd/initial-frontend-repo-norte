@@ -2,9 +2,9 @@ import github_icon from "../images/github-logo.png";
 import '../styles/Signup.css'
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AuthSidebar from "./AuthSidebar";
-import { DynamicUrl } from "./DynamicUrl";
-import GoogleBtn from "./GoogleBtn";
+import AuthSidebar from "../components/AuthSideBar";
+import { DynamicUrl } from "../utils/api";
+import GoogleBtn from "../components/GoogleBtn";
 
 function Signin() {
   const nav = useNavigate();

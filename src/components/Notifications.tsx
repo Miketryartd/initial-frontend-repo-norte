@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { DynamicUrl } from "./DynamicUrl";
+import { DynamicUrl } from "../utils/api";
 
 export type NotificationType = {
   _id: string;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { DynamicUrl } from "./DynamicUrl";
+import { DynamicUrl } from "../utils/api";
 
 interface VotesProps {
   postId: string;

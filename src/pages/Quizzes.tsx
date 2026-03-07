@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import Layout from "./LayoutWrapper";
+import Layout from "../components/LayoutWrapper";
 import { useParams } from "react-router-dom";
-import { DynamicUrl } from "./DynamicUrl";
+import { DynamicUrl } from "../utils/api";
 
 interface Question {
   _id: string;

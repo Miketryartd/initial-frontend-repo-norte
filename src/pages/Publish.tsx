@@ -1,6 +1,6 @@
 import { useState, } from "react";
-import Layout from "./LayoutWrapper";
-import { DynamicUrl } from "./DynamicUrl";
+import Layout from "../components/LayoutWrapper";
+import { DynamicUrl } from "../utils/api";
 
 
 
