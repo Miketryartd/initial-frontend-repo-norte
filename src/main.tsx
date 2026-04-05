@@ -12,7 +12,7 @@ import Dashboard from './components/Dashboard.tsx'
 import Publish from './pages/Publish.tsx'
 import Feed from "./pages/Feed.tsx";
 import ProtectedRoute from './components/ProtectedRoute.tsx'
-import AuthChecker from './pages/AuthChecker.tsx'
+import AuthChecker from './Middleware/AuthChecker.tsx'
 import Post from './pages/Post.tsx'
 import CreateQuiz from './pages/CreateQuiz.tsx'
 import Quizzes from './pages/Quizzes.tsx'
